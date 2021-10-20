@@ -1,4 +1,3 @@
-import xlrd
 from ClointFusion import ClointFusion as Cf
 import pytube
 from pytube import YouTube
@@ -8,6 +7,7 @@ import time
 import urllib.request
 import xlrd
 import xlsxwriter
+import array
 
 
 #def progress_check(stream = None, chunk = None, file_handle = None, remaining = None, file_size = "MB"):
@@ -20,9 +20,19 @@ def file_path():
     home = os.path.expanduser('~')
     downlod_path = os.path.join(home, 'C:\Python39')
     return downlod_path
-copy =str(Cf.excel_copy_range_from_sheet(excel_path="", startCol=0, startRow=0, endRow=0, endCol=0))
+copy =Cf.excel_copy_range_from_sheet(excel_path="", startCol=0, startRow=0, endRow=0, endCol=0)
 print(copy)
-# browser = Cf.browser_activate(url:= "https://www.youtube.com/",
+#copy= [['https://www.youtube.com/watch?v=Ncm_yzScCpQ'],['https://www.youtube.com/watch?v=9JXeYfVNpEs']]
+#print(copy)
+# for i in range(len(copy)):
+#     def download(copy):
+#
+#         print('current i :', copy[i])
+
+#balance = array.array('i',(copy))
+# for i in range(0,4):
+#     print(i)
+     # browser = Cf.browser_activate(url:= "https://www.youtube.com/",
 #                      files_download_path:= 'C:\Python39
 #                      dummy_browser:= True,
 #                      open_in_background:= False,
@@ -44,17 +54,19 @@ def complete_func(self, file_path):
     pass
 def my_proxies():
     pass
+#global copy
+for i in range(len(copy)):
 
-def download():
-    global copy
-
-    x=0;
-    while x < len(copy):
-        print(copy[x])
+    def download(copy):
+        print('specific url:', copy[0])
         print("Your video will saved to: {}".format(file_path()))
         print("Accessing Youtube URL....")
-        youtube = pytube.YouTube(copy, on_progress_callback=progress_func, on_complete_callback=complete_func, use_oauth=False, allow_oauth_cache=True)
+        youtube = pytube.YouTube(copy[0], on_progress_callback=progress_func, on_complete_callback=complete_func, use_oauth=False, allow_oauth_cache=True)
+    #mp4files = youtube.filter('mp4')
+    #video = youtube.get(mp4files[-1].extension,mp4files[-1].resolution)
+
         video = youtube.streams.first()
+
     #video.stream_to_buffer(buffer=1).filter(progressive=True, file_extension="mp4", file_size=MB)
     #video.order_by(resolution)
         title = video.title
@@ -62,8 +74,7 @@ def download():
         video.download('C:\Python39')
         print("download is completed...")
         print("Ready to Download another video. \n\n")
-        x =+1
-download()
-Cf.excel_set_single_cell(excel_path="", sheet_name="", header=0, columnName="", cellNumber=0, setText="")
 
-#aa = Cf.excel_describe_data(excel_path="C:\Python39", sheet_name='Sheet1', header=0)
+
+    download(copy[i])
+Cf.excel_set_single_cell(excel_path="", sheet_name="Sheet1", header=0, columnName="", cellNumber=0, setText="")
